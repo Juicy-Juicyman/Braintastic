@@ -1,14 +1,21 @@
-import Link from "next/link";
+"use client";
 
-const games = [
-  { name: "Counting Game", slug: "counting", imgSrc: "/counting.webp" },
-  { name: "Memory Game", slug: "memory", imgSrc: "/memory.webp" },
-  { name: "Shapes Game", slug: "shapes", imgSrc: "/shapes.webp" },
-  { name: "Spelling Game", slug: "spelling", imgSrc: "/spelling.webp" },
-  { name: "Reaction Game", slug: "reaction", imgSrc: "/reaction.webp" },
-];
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { fetchGames } from "@/utils/firebaseQueries";
+import type { Game } from "@/types/gametypes";
 
 export default function GamesPage() {
+  const [games, setGames] = useState<Game[]>([]);
+
+  useEffect(() => {
+    const getGames = async () => {
+      const fetchedGames = await fetchGames();
+      setGames(fetchedGames);
+    };
+    getGames();
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-yellow-50 to-blue-50 p-6">
       <h1 className="text-5xl font-extrabold text-purple-600 mb-8">Games</h1>
@@ -27,6 +34,7 @@ export default function GamesPage() {
               />
             </div>
             <h2 className="text-2xl font-bold text-blue-600">{game.name}</h2>
+            <p>{game.description}</p>
           </Link>
         ))}
       </div>
