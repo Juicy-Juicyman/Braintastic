@@ -56,28 +56,30 @@ export default function MemoryGame() {
   };
 
   return (
-    <div className="text-center">
-      <h1>Memory Game</h1>
-      {gameOver && <h2 className="p-5">WINNER WINNER CHICKEN DINNER!</h2>}
-      <div className="grid grid-cols-4 gap-5 mt-5">
-        {cards.map((card, index) => (
-          <div className={`flex justify-center text-4xl font-bold text-black items-center w-28 bg-slate-200 h-28 transform cursor-pointer transition-transform duration-300 
-            ${flipped.includes(index) || solved.includes(index) 
-              ? "rotate-180" 
-              : ""
-            }`} 
-            key={index}
-            onClick={() => handleClick(index)}>
-              {flipped.includes(index) || solved.includes(index) 
-              ?  (<Image className="rotate-180" src={`/memory-cards/${card}.jpg`} fill alt="Memory Card"/>) 
-              : "?"
-              }
-          </div>
-        ))}
+    <div className="flex items-center justify-center">
+      <div className="text-center">
+        <h1>Memory Game</h1>
+        {gameOver && <h2 className="p-5">WINNER WINNER CHICKEN DINNER!</h2>}
+        <div className="grid grid-cols-4 gap-5 mt-5">
+          {cards.map((card, index) => (
+            <div className={`flex justify-center text-4xl font-bold text-black items-center w-28 bg-slate-200 h-28 transform cursor-pointer transition-transform duration-300 
+              ${flipped.includes(index) || solved.includes(index) 
+                ? "rotate-180" 
+                : ""
+              }`} 
+              key={index}
+              onClick={() => handleClick(index)}>
+                {flipped.includes(index) || solved.includes(index) 
+                ?  (<Image className="rotate-180" src={`/memory-cards/${card}.jpg`} fill alt="Memory Card"/>) 
+                : "?"
+                }
+            </div>
+          ))}
+        </div>
+        <button 
+        onClick={resetGame}
+        className="p-5 bg-slate-500 rounded-md mt-5">Restart</button>
       </div>
-      <button 
-      onClick={resetGame}
-      className="p-5 bg-slate-500 rounded-md mt-5">Restart</button>
     </div>
   );
 }
