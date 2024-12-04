@@ -5,3 +5,14 @@ export interface Game {
   imgSrc: string;
   description: string;
 }
+
+export type ProblemType = {
+  question: string;
+  answer: number;
+};
+
+export type WordType = {
+  word: string;
+  image: string;
+  hint: string;
+};

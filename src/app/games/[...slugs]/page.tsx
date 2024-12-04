@@ -13,7 +13,7 @@ const gamesMap: { [key: string]: React.ComponentType } = {
   reaction: ReactionGame,
 };
 
-export default function GamePage({ params }: { params: { slugs: string[] } }) {
+export default async function GamePage({ params }: { params: { slugs: string[] } }) {
   const gameKey = params.slugs[0]; 
   const GameComponent = gamesMap[gameKey];
 
@@ -28,7 +28,7 @@ export default function GamePage({ params }: { params: { slugs: string[] } }) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen bg-white">
       <GameComponent />
     </div>
   );
