@@ -19,7 +19,7 @@ const generateDeck = () => {
   return deck.sort(() => Math.random() - 0.5);
 };
 
-export default function MemoryGame() {
+const MemoryGame: React.FC = () => {
   const [cards, setCards] = useState<string[]>(generateDeck());
   const [flipped, setFlipped] = useState<number[]>([]);
   const [solved, setSolved] = useState<number[]>([]);
@@ -82,4 +82,6 @@ export default function MemoryGame() {
       </div>
     </div>
   );
-}
+};
+
+export default MemoryGame;
