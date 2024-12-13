@@ -84,7 +84,7 @@ const ShapeMatchingGame: React.FC = () => {
         </div>
       )}
 
-<div className="w-full md:w-1/2 mt-6 mx-auto">
+      <div className="w-full md:w-1/2 mt-6 mx-auto">
         <DescriptionBox description="Welcome to the Shape/Color Matching Game! This fun and engaging activity is designed to sharpen your memory and matching skills. To play, click on an image of a shape or color in the top/left column, then click on the corresponding word in the bottom/right column. Match all pairs to win!"/>
       </div>
 
