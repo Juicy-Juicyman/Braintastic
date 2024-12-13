@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Braintastic",
-  description: "A platform for kids to learn shit!",
+  description: "A platform for kids to learn fun stuff!",
 };
 
 export default function RootLayout({

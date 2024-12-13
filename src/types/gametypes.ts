@@ -16,3 +16,9 @@ export type WordType = {
   image: string;
   hint: string;
 };
+
+export type MatchItems = {
+  id: number;
+  name: string;
+  image: string;
+}

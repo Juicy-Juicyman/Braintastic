@@ -1,6 +1,10 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import StartScreen from "./reactionComps/StartScreen"; 
+import GameStats from "./reactionComps/GameStats"; 
+import GameOverScreen from "./reactionComps/GameOverScreen"; 
+import Dot from "./reactionComps/Dot"; 
 
 const GAME_DURATION = 30; 
 const MIN_DOT_SIZE = 30; 
@@ -76,7 +80,6 @@ const ReactionGame: React.FC = () => {
     setReactionTimes((prev) => [...prev, reactionTime]);
 
     const points = Math.floor((MAX_DOT_SIZE + 20 - dotSize)); 
-
     setScore((prev) => prev + points);
     setClickCount((prev) => prev + 1);
 
@@ -84,7 +87,7 @@ const ReactionGame: React.FC = () => {
   };
 
   const calculateStats = () => {
-    const totalTime = GAME_DURATION; 
+    const totalTime = GAME_DURATION;
     const cps = clickCount / totalTime; 
 
     let avgReaction = 0;
@@ -105,76 +108,35 @@ const ReactionGame: React.FC = () => {
       </h1>
 
       {!isPlaying && timeLeft === GAME_DURATION && (
-        <div className="text-center">
-          <p className="mb-4 text-lg text-gray-700">
-            Click on the dots as fast as you can! Smaller dots give more points.
-          </p>
-          <button
-            onClick={startGame}
-            className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-semibold text-lg"
-          >
-            Start Game
-          </button>
-        </div>
+        <StartScreen onStart={startGame} />
       )}
 
       {isPlaying && (
-        <div className="text-center mb-4">
-          <p className="text-lg text-gray-800 font-bold">Time Left: {timeLeft}s</p>
-          <p className="text-lg text-gray-600">Score: {score}</p>
-        </div>
+        <GameStats timeLeft={timeLeft} score={score} />
       )}
 
       {!isPlaying && timeLeft < GAME_DURATION && (
-        <div className="text-center mt-6 bg-white p-6 rounded shadow">
-          <h2 className="text-2xl font-bold text-green-700 mb-4">
-            Game Over!
-          </h2>
-          <p className="text-lg text-gray-700 mb-2">Your Score: {score}</p>
-          <p className="text-lg text-gray-700 mb-2">
-            Clicks: {clickCount} in {GAME_DURATION} seconds
-          </p>
-          <p className="text-lg text-gray-700 mb-2">
-            Clicks per Second: {cps.toFixed(2)}
-          </p>
-          <p className="text-lg text-gray-700 mb-4">
-            Avg Reaction Time: {avgReaction.toFixed(0)} ms
-          </p>
-          <button
-            onClick={startGame}
-            className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-semibold text-lg"
-          >
-            Play Again
-          </button>
-        </div>
+        <GameOverScreen
+          score={score}
+          clickCount={clickCount}
+          gameDuration={GAME_DURATION}
+          cps={cps}
+          avgReaction={avgReaction}
+          onPlayAgain={startGame}
+        />
       )}
 
       <div
         ref={gameAreaRef}
         className="relative w-full h-[500px] bg-white mt-6 rounded-lg shadow-md overflow-hidden"
       >
-        {isPlaying && (
-          <div
-            onClick={handleDotClick}
-            style={{
-              position: "absolute",
-              top: dotY,
-              left: dotX,
-              width: dotSize,
-              height: dotSize,
-              borderRadius: "50%",
-              backgroundColor: "#FF6347",
-              cursor: "pointer",
-              transition: "top 0.1s, left 0.1s",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: "bold",
-              color: "white",
-            }}
-          >
-          </div>
-        )}
+        <Dot 
+          x={dotX} 
+          y={dotY} 
+          size={dotSize} 
+          onClick={handleDotClick} 
+          isPlaying={isPlaying} 
+        />
       </div>
     </div>
   );

@@ -26,6 +26,11 @@ export default function DesktopNavbar() {
         </Link>
       </li>
       <li>
+        <Link href="/highscore" className={getLinkClass("/highscore")}>
+          Highscores
+        </Link>
+      </li>
+      <li>
         <Link href="/about" className={getLinkClass("/about")}>
           About
         </Link>
