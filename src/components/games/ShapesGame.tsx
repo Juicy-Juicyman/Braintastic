@@ -9,7 +9,7 @@ import ImagesColumn from './matchingComps/ImagesColumn';
 import WordsColumn from './matchingComps/WordsColumn';
 import MatchedPairsDisplay from './matchingComps/MatchedPairsDisplay';
 import GameOverScreen from './matchingComps/GameOverScreen';
-import DescriptionBox from './matchingComps/DescriptionBox'; // Import the new component
+import DescriptionBox from './matchingComps/DescriptionBox'; 
 
 const ShapeMatchingGame: React.FC = () => {
   const [items, setItems] = useState<MatchItems[]>([]);
