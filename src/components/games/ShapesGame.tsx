@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { MatchItems } from '@/types/gametypes';
 import { ALL_ITEMS } from '@/data/words';
 import { getGameItems } from '@/utils/matchingGameUtils';
-
+import { saveHighScore } from '@/utils/firebaseQueries'; 
 import ImagesColumn from './matchingComps/ImagesColumn';
 import WordsColumn from './matchingComps/WordsColumn';
 import MatchedPairsDisplay from './matchingComps/MatchedPairsDisplay';
@@ -15,7 +15,9 @@ const ShapeMatchingGame: React.FC = () => {
   const [items, setItems] = useState<MatchItems[]>([]);
   const [matched, setMatched] = useState<MatchItems[]>([]);
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
-
+  const [attempts, setAttempts] = useState<number>(0);
+  const [nickname, setNickname] = useState<string>(''); 
+  const [isSaving, setIsSaving] = useState<boolean>(false); 
   const [incorrectItemId, setIncorrectItemId] = useState<number | null>(null);
   const [justMatchedId, setJustMatchedId] = useState<number | null>(null);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
@@ -32,6 +34,8 @@ const ShapeMatchingGame: React.FC = () => {
     setIncorrectItemId(null);
     setJustMatchedId(null);
     setSelectedItemId(null);
+    setAttempts(0);
+    setNickname('');
   }
 
   function handleImageClick(itemId: number) {
@@ -40,6 +44,8 @@ const ShapeMatchingGame: React.FC = () => {
 
   function handleWordClick(targetName: string) {
     if (selectedItemId === null) return;
+
+    setAttempts((prev) => prev + 1); 
 
     const selectedItem = items.find(it => it.id === selectedItemId);
     if (!selectedItem) {
@@ -72,6 +78,23 @@ const ShapeMatchingGame: React.FC = () => {
     }
   }
 
+  const handleSaveHighScore = async () => {
+    if (nickname.trim() === '') {
+      alert('Please enter a nickname!');
+      return;
+    }
+
+    setIsSaving(true);
+    await saveHighScore({
+      nickname,
+      score: matched.length,
+      attempts,
+      gameName: 'Shape Matching Game',
+    });
+    setIsSaving(false);
+    alert('High score saved!');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4 flex flex-col items-center">
       <h1 className="text-2xl sm:text-3xl font-extrabold text-purple-600 mb-4">
@@ -81,6 +104,25 @@ const ShapeMatchingGame: React.FC = () => {
       {isGameFinished && (
         <div className="w-full max-w-md mb-4">
           <GameOverScreen onPlayAgain={initializeGame} />
+          <div className="mt-4">
+            <p className="text-gray-700 font-medium">Attempts: {attempts}</p>
+            <input
+              type="text"
+              placeholder="Enter your nickname"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded mt-2"
+            />
+            <button
+              onClick={handleSaveHighScore}
+              disabled={isSaving}
+              className={`w-full mt-2 px-4 py-2 text-white rounded ${
+                isSaving ? 'bg-gray-400' : 'bg-green-500 hover:bg-green-600'
+              } transition`}
+            >
+              {isSaving ? 'Saving...' : 'Save High Score'}
+            </button>
+          </div>
         </div>
       )}
 

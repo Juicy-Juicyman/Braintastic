@@ -5,6 +5,7 @@ import StartScreen from "./reactionComps/StartScreen";
 import GameStats from "./reactionComps/GameStats"; 
 import GameOverScreen from "./reactionComps/GameOverScreen"; 
 import Dot from "./reactionComps/Dot"; 
+import { saveHighScore } from "@/utils/firebaseQueries";
 
 const GAME_DURATION = 30; 
 const MIN_DOT_SIZE = 30; 
@@ -20,6 +21,8 @@ const ReactionGame: React.FC = () => {
   const [dotSize, setDotSize] = useState<number>(50);
   const [reactionTimes, setReactionTimes] = useState<number[]>([]);
   const [lastDotTime, setLastDotTime] = useState<number>(0);
+  const [nickname, setNickname] = useState<string>("");
+  const [isSaving, setIsSaving] = useState<boolean>(false);
 
   const gameAreaRef = useRef<HTMLDivElement | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -101,6 +104,24 @@ const ReactionGame: React.FC = () => {
 
   const { cps, avgReaction } = calculateStats();
 
+  const handleSaveHighScore = async () => {
+    if (nickname.trim() === "") {
+      alert("Please enter a nickname!");
+      return;
+    }
+
+    setIsSaving(true);
+    await saveHighScore({
+      nickname,
+      score,
+      attempts: clickCount,
+      gameName: "Reaction Game",
+    });
+    setIsSaving(false);
+    alert("High score saved!");
+    setNickname(""); 
+  };
+
   return (
     <div className="min-h-screen p-6 bg-gradient-to-br from-yellow-100 to-green-100 flex flex-col items-center">
       <h1 className="text-4xl font-extrabold text-green-700 mb-6">
@@ -111,19 +132,38 @@ const ReactionGame: React.FC = () => {
         <StartScreen onStart={startGame} />
       )}
 
-      {isPlaying && (
-        <GameStats timeLeft={timeLeft} score={score} />
-      )}
+      {isPlaying && <GameStats timeLeft={timeLeft} score={score} />}
 
       {!isPlaying && timeLeft < GAME_DURATION && (
-        <GameOverScreen
-          score={score}
-          clickCount={clickCount}
-          gameDuration={GAME_DURATION}
-          cps={cps}
-          avgReaction={avgReaction}
-          onPlayAgain={startGame}
-        />
+        <div className="text-center bg-white p-6 rounded shadow-lg">
+          <GameOverScreen
+            score={score}
+            clickCount={clickCount}
+            gameDuration={GAME_DURATION}
+            cps={cps}
+            avgReaction={avgReaction}
+            onPlayAgain={startGame}
+          />
+
+          <div className="mt-4">
+            <input
+              type="text"
+              placeholder="Enter your nickname"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded mb-4"
+            />
+            <button
+              onClick={handleSaveHighScore}
+              disabled={isSaving}
+              className={`px-4 py-2 text-white rounded ${
+                isSaving ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
+              } transition`}
+            >
+              {isSaving ? "Saving..." : "Save High Score"}
+            </button>
+          </div>
+        </div>
       )}
 
       <div
