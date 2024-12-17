@@ -22,3 +22,12 @@ export type MatchItems = {
   name: string;
   image: string;
 }
+
+export type HighScores = {
+  id: string;
+  nickname: string;
+  score: number;
+  attempts: number;
+  game: string;
+  timestamp: Date;
+};
