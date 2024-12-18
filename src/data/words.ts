@@ -173,16 +173,6 @@ export const words: WordType[] = [
     hint: 'A device used to tell time.',
   },
   {
-    word: 'bread',
-    image: '/spelling-images/bread.jpg',
-    hint: 'A staple food made from flour and baked.',
-  },
-  {
-    word: 'ship',
-    image: '/spelling-images/ship.jpg',
-    hint: 'A large vessel that travels on water.',
-  },
-  {
     word: 'train',
     image: '/spelling-images/train.jpg',
     hint: 'A series of connected vehicles that run on tracks.',
@@ -191,16 +181,6 @@ export const words: WordType[] = [
     word: 'phone',
     image: '/spelling-images/phone.jpg',
     hint: 'A device used to communicate with others.',
-  },
-  {
-    word: 'candle',
-    image: '/spelling-images/candle.jpg',
-    hint: 'A stick of wax with a wick that burns to give light.',
-  },
-  {
-    word: 'puzzle',
-    image: '/spelling-images/puzzle.jpg',
-    hint: 'A game that tests your problem-solving skills.',
   },
   {
     word: 'drum',
