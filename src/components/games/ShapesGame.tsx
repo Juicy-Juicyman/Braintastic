@@ -4,12 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { MatchItems } from '@/types/gametypes';
 import { ALL_ITEMS } from '@/data/words';
 import { getGameItems } from '@/utils/matchingGameUtils';
-import { saveHighScore } from '@/utils/firebaseQueries'; 
 import ImagesColumn from './matchingComps/ImagesColumn';
 import WordsColumn from './matchingComps/WordsColumn';
 import MatchedPairsDisplay from './matchingComps/MatchedPairsDisplay';
 import GameOverScreen from './matchingComps/GameOverScreen';
 import DescriptionBox from './matchingComps/DescriptionBox'; 
+import { handleSaveHighScoreCommon } from '@/utils/highScoreHelper';
 
 const ShapeMatchingGame: React.FC = () => {
   const [items, setItems] = useState<MatchItems[]>([]);
@@ -26,7 +26,7 @@ const ShapeMatchingGame: React.FC = () => {
     initializeGame();
   }, []);
 
-  function initializeGame() {
+  function setupGameState() {
     const gameItems = getGameItems(ALL_ITEMS);
     setItems(gameItems);
     setMatched([]);
@@ -36,6 +36,15 @@ const ShapeMatchingGame: React.FC = () => {
     setSelectedItemId(null);
     setAttempts(0);
     setNickname('');
+  }
+  
+  function initializeGame() {
+    setupGameState();
+  }
+  
+  function resetGame() {
+    setupGameState();
+    setIsSaving(false); 
   }
 
   function handleImageClick(itemId: number) {
@@ -78,22 +87,17 @@ const ShapeMatchingGame: React.FC = () => {
     }
   }
 
-  const handleSaveHighScore = async () => {
-    if (nickname.trim() === '') {
-      alert('Please enter a nickname!');
-      return;
-    }
-
-    setIsSaving(true);
-    await saveHighScore({
-      nickname,
-      score: matched.length,
-      attempts,
-      gameName: 'Shape Matching Game',
-    });
-    setIsSaving(false);
-    alert('High score saved!');
-  };
+ 
+async function handleSaveHighScore() {
+  await handleSaveHighScoreCommon({
+    nickname,
+    score: matched.length,
+    attempts,
+    gameName: "Shape Matching Game",
+    setIsSaving,
+    resetGame,
+  });
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4 flex flex-col items-center">
@@ -101,9 +105,9 @@ const ShapeMatchingGame: React.FC = () => {
         Shape/Color Matching
       </h1>
 
-      {isGameFinished && (
+      {isGameFinished ? (
         <div className="w-full max-w-md mb-4">
-          <GameOverScreen onPlayAgain={initializeGame} />
+          <GameOverScreen onPlayAgain={resetGame} />
           <div className="mt-4">
             <p className="text-gray-700 font-medium">Attempts: {attempts}</p>
             <input
@@ -124,33 +128,35 @@ const ShapeMatchingGame: React.FC = () => {
             </button>
           </div>
         </div>
+      ) : (
+        <>
+          <div className="w-full md:w-1/2 mt-6 mx-auto">
+            <DescriptionBox description="Welcome to the Shape/Color Matching Game! This fun and engaging activity is designed to sharpen your memory and matching skills. To play, click on an image of a shape or color in the top/left column, then click on the corresponding word in the bottom/right column. Match all pairs to win!"/>
+          </div>
+
+          <div className="flex flex-col md:flex-row w-full max-w-4xl mt-4 md:mt-6 gap-4 mx-auto">
+            <ImagesColumn
+              items={items}
+              isGameFinished={isGameFinished}
+              incorrectItemId={incorrectItemId}
+              justMatchedId={justMatchedId}
+              selectedItemId={selectedItemId}
+              onImageClick={handleImageClick}
+            />
+
+            <div className="flex-1 flex flex-col gap-4">
+              <WordsColumn
+                items={items}
+                matched={matched}
+                incorrectItemId={incorrectItemId}
+                justMatchedId={justMatchedId}
+                onWordClick={handleWordClick}
+              />
+              <MatchedPairsDisplay matched={matched} />
+            </div>
+          </div>
+        </>
       )}
-
-      <div className="w-full md:w-1/2 mt-6 mx-auto">
-        <DescriptionBox description="Welcome to the Shape/Color Matching Game! This fun and engaging activity is designed to sharpen your memory and matching skills. To play, click on an image of a shape or color in the top/left column, then click on the corresponding word in the bottom/right column. Match all pairs to win!"/>
-      </div>
-
-      <div className="flex flex-col md:flex-row w-full max-w-4xl mt-4 md:mt-6 gap-4 mx-auto">
-        <ImagesColumn
-          items={items}
-          isGameFinished={isGameFinished}
-          incorrectItemId={incorrectItemId}
-          justMatchedId={justMatchedId}
-          selectedItemId={selectedItemId}
-          onImageClick={handleImageClick}
-        />
-
-        <div className="flex-1 flex flex-col gap-4">
-          <WordsColumn
-            items={items}
-            matched={matched}
-            incorrectItemId={incorrectItemId}
-            justMatchedId={justMatchedId}
-            onWordClick={handleWordClick}
-          />
-          <MatchedPairsDisplay matched={matched} />
-        </div>
-      </div>
     </div>
   );
 };

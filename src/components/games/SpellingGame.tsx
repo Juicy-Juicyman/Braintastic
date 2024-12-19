@@ -4,12 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { WordType } from '@/types/gametypes';
 import { shuffleWords } from '@/utils/spellingGameUtils';
 import { saveHighScore } from '@/utils/firebaseQueries'; 
-
+import { toast } from 'react-hot-toast';
 import FeedbackMessage from './shared/FeedbackMessage'; 
 import ScoreDisplay from './shared/ScoreDisplay'; 
 import WordImageDisplay from './spellingComps/WordImageDisplay'; 
 import WordInputForm from './spellingComps/WordInputForm'; 
 import SharedGameOverScreen from './shared/SharedGameOverScreen';
+import { handleSaveHighScoreCommon } from '@/utils/highScoreHelper';
 
 const SpellingGame: React.FC = () => {
   const [shuffledWords, setShuffledWords] = useState<WordType[]>([]);
@@ -95,24 +96,16 @@ const SpellingGame: React.FC = () => {
     setIsSaving(false);
   }
 
-  const handleSaveHighScore = async () => {
-    if (nickname.trim() === '') {
-      alert('Please enter a nickname!');
-      return;
-    }
-
-    setIsSaving(true);
-
-    await saveHighScore({
+  async function handleSaveHighScore() {
+    await handleSaveHighScoreCommon({
       nickname,
-      score: 10, 
+      score: 10,
       attempts: totalAttempts,
-      gameName: 'Spelling Game',
+      gameName: "Spelling Game",
+      setIsSaving,
+      resetGame,
     });
-
-    setIsSaving(false);
-    alert('High score saved!');
-  };
+  }
 
   if (shuffledWords.length === 0) {
     return <div>Loading...</div>;

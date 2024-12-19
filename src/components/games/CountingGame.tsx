@@ -7,9 +7,9 @@ import ProblemDisplay from './countingComps/ProblemDisplay';
 import OptionsGrid from './countingComps/OptionsGrid'; 
 import FeedbackMessage from './shared/FeedbackMessage'; 
 import ScoreDisplay from './shared/ScoreDisplay'; 
-import DescriptionBox from './matchingComps/DescriptionBox';
-import { saveHighScore } from '@/utils/firebaseQueries'; 
+import DescriptionBox from './matchingComps/DescriptionBox'; 
 import SharedGameOverScreen from './shared/SharedGameOverScreen';
+import { handleSaveHighScoreCommon } from '@/utils/highScoreHelper';
 
 const CountingGame: React.FC = () => {
   const [question, setQuestion] = useState<ProblemType | null>(null);
@@ -79,22 +79,14 @@ const CountingGame: React.FC = () => {
   }
 
   async function handleSaveHighScore() {
-    if (nickname.trim() === "") {
-      alert("Please enter a nickname");
-      return;
-    }
-
-    setIsSaving(true);
-    await saveHighScore({
+    await handleSaveHighScoreCommon({
       nickname,
       score,
       attempts,
       gameName: "Counting Game",
+      setIsSaving,
+      resetGame,
     });
-
-    setIsSaving(false);
-    alert("High score saved!");
-    resetGame();
   }
 
   if (!question) {

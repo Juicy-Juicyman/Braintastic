@@ -5,7 +5,7 @@ import StartScreen from "./reactionComps/StartScreen";
 import GameStats from "./reactionComps/GameStats"; 
 import GameOverScreen from "./reactionComps/GameOverScreen"; 
 import Dot from "./reactionComps/Dot"; 
-import { saveHighScore } from "@/utils/firebaseQueries";
+import { handleSaveHighScoreCommon } from "@/utils/highScoreHelper";
 
 const GAME_DURATION = 30; 
 const MIN_DOT_SIZE = 30; 
@@ -57,6 +57,18 @@ const ReactionGame: React.FC = () => {
     setIsPlaying(false);
   };
 
+  function resetGame() {
+    if (timerRef.current) clearInterval(timerRef.current);
+    setIsPlaying(false);
+    setTimeLeft(GAME_DURATION);
+    setScore(0);
+    setClickCount(0);
+    setReactionTimes([]);
+    setLastDotTime(0);
+    setNickname("");
+    setIsSaving(false);
+  }
+
   const placeDotRandomly = () => {
     if (!gameAreaRef.current) return;
 
@@ -104,23 +116,16 @@ const ReactionGame: React.FC = () => {
 
   const { cps, avgReaction } = calculateStats();
 
-  const handleSaveHighScore = async () => {
-    if (nickname.trim() === "") {
-      alert("Please enter a nickname!");
-      return;
-    }
-
-    setIsSaving(true);
-    await saveHighScore({
+  async function handleSaveHighScore() {
+    await handleSaveHighScoreCommon({
       nickname,
       score,
       attempts: clickCount,
       gameName: "Reaction Game",
+      setIsSaving,
+      resetGame, 
     });
-    setIsSaving(false);
-    alert("High score saved!");
-    setNickname(""); 
-  };
+  }
 
   return (
     <div className="min-h-screen p-6 bg-gradient-to-br from-yellow-100 to-green-100 flex flex-col items-center">

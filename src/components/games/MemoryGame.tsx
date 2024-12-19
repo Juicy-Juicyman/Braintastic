@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { saveHighScore } from "@/utils/firebaseQueries";
 import SharedGameOverScreen from "./shared/SharedGameOverScreen";
+import { handleSaveHighScoreCommon } from "@/utils/highScoreHelper";
 
 const generateDeck = () => {
   const memoryCards = [
@@ -69,24 +69,16 @@ const MemoryGame: React.FC = () => {
     setIsSaving(false);
   };
 
-  const handleSaveHighScore = async () => {
-    if (nickname.trim() === "") {
-      alert("Please enter a nickname!");
-      return;
-    }
-
-    setIsSaving(true);
-    await saveHighScore({
+  async function handleSaveHighScore() {
+    await handleSaveHighScoreCommon({
       nickname,
-      score: solved.length / 2, 
+      score: solved.length / 2,
       attempts,
       gameName: "Memory Game",
+      setIsSaving,
+      resetGame,
     });
-
-    setIsSaving(false);
-    alert("High score saved!");
-    resetGame();
-  };
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
