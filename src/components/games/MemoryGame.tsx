@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { saveHighScore } from "@/utils/firebaseQueries";
+import SharedGameOverScreen from "./shared/SharedGameOverScreen";
 
 const generateDeck = () => {
   const memoryCards = [
@@ -27,11 +28,11 @@ const MemoryGame: React.FC = () => {
   const [attempts, setAttempts] = useState<number>(0);
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [nickname, setNickname] = useState<string>("");
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const checkForMatch = () => {
       const [first, second] = flipped;
-
       if (cards[first] === cards[second]) {
         setSolved((prev) => [...prev, first, second]);
       }
@@ -65,6 +66,7 @@ const MemoryGame: React.FC = () => {
     setAttempts(0);
     setGameOver(false);
     setNickname("");
+    setIsSaving(false);
   };
 
   const handleSaveHighScore = async () => {
@@ -73,6 +75,7 @@ const MemoryGame: React.FC = () => {
       return;
     }
 
+    setIsSaving(true);
     await saveHighScore({
       nickname,
       score: solved.length / 2, 
@@ -80,6 +83,7 @@ const MemoryGame: React.FC = () => {
       gameName: "Memory Game",
     });
 
+    setIsSaving(false);
     alert("High score saved!");
     resetGame();
   };
@@ -89,52 +93,44 @@ const MemoryGame: React.FC = () => {
       <div className="text-center">
         <h1 className="text-4xl font-extrabold text-purple-600 mb-6">Memory Game</h1>
         {gameOver ? (
-          <div className="bg-white p-6 rounded shadow-lg">
-            <h2 className="text-2xl font-bold text-green-600 mb-4">
-              Winner Winner Chicken Dinner!
-            </h2>
-            <p className="text-gray-700 mb-4">Attempts: {attempts}</p>
-            <input
-              type="text"
-              placeholder="Enter your nickname"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded mb-4"
-            />
-            <button
-              onClick={handleSaveHighScore}
-              className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
-            >
-              Save High Score
-            </button>
-            <button
-              onClick={resetGame}
-              className="ml-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
-            >
-              Play Again
-            </button>
-          </div>
+          <SharedGameOverScreen
+            score={solved.length / 2}
+            attempts={attempts}
+            nickname={nickname}
+            onNicknameChange={setNickname}
+            onSaveHighScore={handleSaveHighScore}
+            onPlayAgain={resetGame}
+            isSaving={isSaving}
+            gameTitle="Memory Game"
+          />
         ) : (
           <>
-            <div className="grid grid-cols-4 gap-5 mt-5">
+            <div className="grid grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 mt-5">
               {cards.map((card, index) => (
                 <div
-                  className={`flex justify-center items-center w-28 h-28 bg-slate-200 text-4xl font-bold text-black cursor-pointer rounded transform transition-transform duration-300 
-                  ${
-                    flipped.includes(index) || solved.includes(index)
-                      ? "rotate-180"
-                      : ""
-                  }`}
                   key={index}
                   onClick={() => handleClick(index)}
+                  className={`
+                    relative
+                    flex justify-center items-center
+                    w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28
+                    bg-slate-200 
+                    text-sm sm:text-lg md:text-4xl
+                    font-bold text-black 
+                    cursor-pointer rounded 
+                    transform transition-transform duration-300 
+                    ${flipped.includes(index) || solved.includes(index) ? "rotate-180" : ""}
+                  `}
                 >
                   {flipped.includes(index) || solved.includes(index) ? (
-                    <Image
-                      className="rotate-180"
-                      src={`/memory-cards/${card}.jpg`}
-                      fill
-                      alt="Memory Card"
-                    />
+                    <div className="relative w-full h-full">
+                      <Image
+                        className="rotate-180 object-contain"
+                        src={`/memory-cards/${card}.jpg`}
+                        fill
+                        alt="Memory Card"
+                      />
+                    </div>
                   ) : (
                     "?"
                   )}

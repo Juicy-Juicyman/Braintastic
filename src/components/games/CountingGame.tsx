@@ -3,13 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { ProblemType } from '@/types/gametypes';
 import { generateProblem, generateOptions, generateHint } from "../../utils/mathGameUtils";
-
 import ProblemDisplay from './countingComps/ProblemDisplay'; 
 import OptionsGrid from './countingComps/OptionsGrid'; 
 import FeedbackMessage from './shared/FeedbackMessage'; 
 import ScoreDisplay from './shared/ScoreDisplay'; 
 import DescriptionBox from './matchingComps/DescriptionBox';
 import { saveHighScore } from '@/utils/firebaseQueries'; 
+import SharedGameOverScreen from './shared/SharedGameOverScreen';
 
 const CountingGame: React.FC = () => {
   const [question, setQuestion] = useState<ProblemType | null>(null);
@@ -20,6 +20,7 @@ const CountingGame: React.FC = () => {
   const [animateOnCorrect, setAnimateOnCorrect] = useState<boolean>(false);
   const [answeredThisRound, setAnsweredThisRound] = useState<boolean>(false);
 
+  const [isSaving, setIsSaving] = useState(false);
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const [nickname, setNickname] = useState<string>("");
 
@@ -63,12 +64,27 @@ const CountingGame: React.FC = () => {
     }
   }
 
+  function resetGame() {
+    setScore(0);
+    setAttempts(0);
+    setIsGameOver(false);
+    setNickname("");
+    setFeedback('');
+    setAnsweredThisRound(false);
+    setAnimateOnCorrect(false);
+    setIsSaving(false);
+    const newQ = generateProblem();
+    setQuestion(newQ);
+    setOptions(generateOptions(newQ.answer));
+  }
+
   async function handleSaveHighScore() {
     if (nickname.trim() === "") {
       alert("Please enter a nickname");
       return;
     }
 
+    setIsSaving(true);
     await saveHighScore({
       nickname,
       score,
@@ -76,16 +92,9 @@ const CountingGame: React.FC = () => {
       gameName: "Counting Game",
     });
 
+    setIsSaving(false);
     alert("High score saved!");
     resetGame();
-  }
-
-  function resetGame() {
-    setScore(0);
-    setAttempts(0);
-    setIsGameOver(false);
-    setNickname("");
-    setQuestion(generateProblem());
   }
 
   if (!question) {
@@ -112,26 +121,19 @@ const CountingGame: React.FC = () => {
             />
             <FeedbackMessage feedback={feedback} />
           </div>
-          <ScoreDisplay score={score} />
+          <ScoreDisplay score={score} attempts={attempts}/>
         </>
       ) : (
-        <div className="bg-white p-6 rounded shadow-lg text-center">
-          <h2 className="text-2xl font-bold text-green-600 mb-4">Game Over!</h2>
-          <p className="text-gray-700 mb-4">You scored {score} points in {attempts} attempts.</p>
-          <input
-            type="text"
-            placeholder="Enter your nickname"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded mb-4"
-          />
-          <button
-            onClick={handleSaveHighScore}
-            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
-          >
-            Save High Score
-          </button>
-        </div>
+        <SharedGameOverScreen
+          score={score}
+          attempts={attempts}
+          nickname={nickname}
+          onNicknameChange={setNickname}
+          onSaveHighScore={handleSaveHighScore}
+          onPlayAgain={resetGame}
+          isSaving={isSaving}
+          gameTitle="Counting Game"
+        />
       )}
     </div>
   );

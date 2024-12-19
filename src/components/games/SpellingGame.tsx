@@ -9,6 +9,7 @@ import FeedbackMessage from './shared/FeedbackMessage';
 import ScoreDisplay from './shared/ScoreDisplay'; 
 import WordImageDisplay from './spellingComps/WordImageDisplay'; 
 import WordInputForm from './spellingComps/WordInputForm'; 
+import SharedGameOverScreen from './shared/SharedGameOverScreen';
 
 const SpellingGame: React.FC = () => {
   const [shuffledWords, setShuffledWords] = useState<WordType[]>([]);
@@ -80,6 +81,20 @@ const SpellingGame: React.FC = () => {
     }
   };
 
+  function resetGame() {
+    const shuffled = shuffleWords();
+    setShuffledWords(shuffled);
+    setCurrentIndex(0);
+    setScore(0);
+    setAttempts(0);
+    setTotalAttempts(0);
+    setFeedback('');
+    setUserInput('');
+    setIsGameOver(false);
+    setNickname('');
+    setIsSaving(false);
+  }
+
   const handleSaveHighScore = async () => {
     if (nickname.trim() === '') {
       alert('Please enter a nickname!');
@@ -106,32 +121,22 @@ const SpellingGame: React.FC = () => {
   const currentImage = shuffledWords[currentIndex].image;
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 bg-gradient-to-br from-yellow-50 to-green-50 min-h-screen flex flex-col items-center">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-green-600 mb-4">
+    <div className="p-4 sm:p-6 md:p-8 bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen flex flex-col items-center">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-purple-600 mb-4">
         Spelling Game
       </h1>
 
       {isGameOver ? (
-        <div className="bg-white p-6 rounded shadow w-full max-w-md">
-          <h2 className="text-xl font-bold text-center text-green-600">Game Over!</h2>
-          <p className="text-center text-gray-700 mt-2">Attempts: {totalAttempts}</p>
-          <input
-            type="text"
-            placeholder="Enter your nickname"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded mt-4"
-          />
-          <button
-            onClick={handleSaveHighScore}
-            disabled={isSaving}
-            className={`w-full mt-4 px-4 py-2 text-white rounded ${
-              isSaving ? 'bg-gray-400' : 'bg-green-500 hover:bg-green-600'
-            } transition`}
-          >
-            {isSaving ? 'Saving...' : 'Save High Score'}
-          </button>
-        </div>
+        <SharedGameOverScreen
+          score={10} 
+          attempts={totalAttempts}
+          nickname={nickname}
+          onNicknameChange={setNickname}
+          onSaveHighScore={handleSaveHighScore}
+          onPlayAgain={() => resetGame}
+          isSaving={isSaving}
+          gameTitle="Spelling Game"
+        />
       ) : (
         <div className="bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-xl w-full max-w-md flex flex-col items-center">
           <WordImageDisplay imageSrc={currentImage} />
@@ -144,7 +149,7 @@ const SpellingGame: React.FC = () => {
         </div>
       )}
 
-      <ScoreDisplay score={score} />
+      <ScoreDisplay score={score} attempts={totalAttempts}/>
     </div>
   );
 };
