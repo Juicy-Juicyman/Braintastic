@@ -10,7 +10,7 @@ import WordInputForm from './spellingComps/WordInputForm';
 import SharedGameOverScreen from './shared/SharedGameOverScreen';
 import { handleSaveHighScoreCommon } from '@/utils/highScoreHelper';
 
-const SpellingGame: React.FC = () => {
+const SpellingGame: React.FC<{}> = () => {
   const [shuffledWords, setShuffledWords] = useState<WordType[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 

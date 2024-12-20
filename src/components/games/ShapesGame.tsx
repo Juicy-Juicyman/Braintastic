@@ -11,7 +11,7 @@ import GameOverScreen from './matchingComps/GameOverScreen';
 import DescriptionBox from './matchingComps/DescriptionBox'; 
 import { handleSaveHighScoreCommon } from '@/utils/highScoreHelper';
 
-const ShapeMatchingGame: React.FC = () => {
+const ShapeMatchingGame: React.FC<{}> = () => {
   const [items, setItems] = useState<MatchItems[]>([]);
   const [matched, setMatched] = useState<MatchItems[]>([]);
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);

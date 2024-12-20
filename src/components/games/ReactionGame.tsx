@@ -11,7 +11,7 @@ const GAME_DURATION = 30;
 const MIN_DOT_SIZE = 30; 
 const MAX_DOT_SIZE = 80; 
 
-const ReactionGame: React.FC = () => {
+const ReactionGame: React.FC<{}> = () => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<number>(GAME_DURATION);
   const [score, setScore] = useState<number>(0);

@@ -21,7 +21,7 @@ const generateDeck = () => {
   return deck.sort(() => Math.random() - 0.5);
 };
 
-const MemoryGame: React.FC = () => {
+const MemoryGame: React.FC<{}> = () => {
   const [cards, setCards] = useState<string[]>(generateDeck());
   const [flipped, setFlipped] = useState<number[]>([]);
   const [solved, setSolved] = useState<number[]>([]);
