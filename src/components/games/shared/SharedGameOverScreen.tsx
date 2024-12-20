@@ -25,7 +25,7 @@ const SharedGameOverScreen: React.FC<SharedGameOverScreenProps> = ({
 }) => {
   return (
     <div className="bg-white p-6 rounded shadow-lg text-center">
-      <h2 className="text-2xl font-bold text-green-600 mb-4">Game Over!</h2>
+      <h2 className="text-2xl font-bold text-purple-600 mb-4">Game Over!</h2>
       {gameTitle && <h3 className="text-xl font-semibold text-gray-700 mb-2">{gameTitle}</h3>}
       <p className="text-gray-700 mb-4">You scored {score} points in {attempts} attempts.</p>
       <input
@@ -38,7 +38,7 @@ const SharedGameOverScreen: React.FC<SharedGameOverScreenProps> = ({
       <button
         onClick={onSaveHighScore}
         disabled={isSaving || nickname.trim() === ""}
-        className={`px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition ${
+        className={`px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-800 transition ${
           nickname.trim() === "" ? "opacity-50 cursor-not-allowed" : ""
         }`}
       >

@@ -42,3 +42,63 @@ body {
   50% { transform: translateX(5px); }
   75% { transform: translateX(-5px); }
 }
+
+@keyframes textFlashCorrect {
+  0% { color: #2563eb; }    
+  50% { color: #22c55e; }    
+  100% { color: #2563eb; }   
+}
+
+@keyframes textFlashIncorrect {
+  0% { color: #2563eb; }   
+  50% { color: #ef4444; }   
+  100% { color: #2563eb; }
+}
+
+.animate-correct-text {
+  animation: textFlashCorrect 0.5s ease-in-out;
+}
+
+.animate-incorrect-text {
+  animation: textFlashIncorrect 0.5s ease-in-out;
+}
+
+
+
+
+@property --a {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes a {
+  to { --a: 1turn; }
+}
+
+.card {
+  position: relative; 
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0; 
+  border: solid 0.5em; 
+  border-image: conic-gradient(
+    from var(--a), 
+    #669900, #99cc33, #ccee66, 
+    #006699, #3399cc, #990066, 
+    #cc3399, #ff6600, #ff9900, 
+    #ffcc00, #669900
+  ) 1;
+  filter: blur(1em); 
+  animation: a 4s linear infinite;
+  z-index: 0;
+}
+
+.card > * {
+  position: relative; 
+  z-index: 1;
+}

@@ -71,13 +71,11 @@ const ReactionGame: React.FC = () => {
 
   const placeDotRandomly = () => {
     if (!gameAreaRef.current) return;
-
+    
     const rect = gameAreaRef.current.getBoundingClientRect();
-
     const randomSize = Math.floor(Math.random() * (MAX_DOT_SIZE - MIN_DOT_SIZE + 1)) + MIN_DOT_SIZE;
     const maxX = rect.width - randomSize;
     const maxY = rect.height - randomSize;
-
     const newX = Math.floor(Math.random() * maxX);
     const newY = Math.floor(Math.random() * maxY);
 
