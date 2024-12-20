@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { WordType } from '@/types/gametypes';
 import { shuffleWords } from '@/utils/spellingGameUtils';
-import { saveHighScore } from '@/utils/firebaseQueries'; 
-import { toast } from 'react-hot-toast';
 import FeedbackMessage from './shared/FeedbackMessage'; 
 import ScoreDisplay from './shared/ScoreDisplay'; 
 import WordImageDisplay from './spellingComps/WordImageDisplay'; 

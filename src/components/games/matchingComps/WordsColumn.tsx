@@ -3,7 +3,7 @@ import { MatchItems } from '@/types/gametypes';
 
 interface WordsColumnProps {
   items: MatchItems[];
-  matched: MatchItems[];
+  matched?: MatchItems[];
   incorrectItemId: number | null;
   justMatchedId: number | null;
   onWordClick: (targetName: string) => void;
@@ -11,7 +11,6 @@ interface WordsColumnProps {
 
 const WordsColumn: React.FC<WordsColumnProps> = ({
   items,
-  matched,
   incorrectItemId,
   justMatchedId,
   onWordClick

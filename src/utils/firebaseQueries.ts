@@ -1,6 +1,6 @@
 import { db } from "@/lib/firebase";
 import type { Game, HighScores } from "@/types/gametypes";
-import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 
 
 
