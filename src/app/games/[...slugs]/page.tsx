@@ -3,9 +3,9 @@ import CountingGame from "@/components/games/CountingGame";
 import MemoryGame from "@/components/games/MemoryGame"; 
 import ShapesGame from "@/components/games/ShapesGame"; 
 import SpellingGame from "@/components/games/SpellingGame"; 
-import ReactionGame from "@/components/games/ReactionGame";
+import ReactionGame from "@/components/games/ReactionGame"; 
 
-const gamesMap: { [key: string]: React.ComponentType<{}> } = {
+const gamesMap: { [key: string]: () => JSX.Element } = {
   counting: CountingGame,
   memory: MemoryGame,
   shapes: ShapesGame,
@@ -14,13 +14,15 @@ const gamesMap: { [key: string]: React.ComponentType<{}> } = {
 };
 
 export default function GamePage({ params }: { params: { slugs: string[] } }) {
-  const gameKey = params.slugs[0];
+  const gameKey = params.slugs[0]; 
   const GameComponent = gamesMap[gameKey];
 
   if (!GameComponent) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-4xl font-bold text-red-600">Game not found!</h1>
+        <h1 className="text-4xl font-bold text-red-600">
+          Game not found!
+        </h1>
       </div>
     );
   }

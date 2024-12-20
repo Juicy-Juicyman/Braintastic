@@ -11,7 +11,7 @@ import DescriptionBox from './matchingComps/DescriptionBox';
 import SharedGameOverScreen from './shared/SharedGameOverScreen';
 import { handleSaveHighScoreCommon } from '@/utils/highScoreHelper';
 
-const CountingGame: React.FC<{}> = () => {
+export default function CountingGame() {
   const [question, setQuestion] = useState<ProblemType | null>(null);
   const [options, setOptions] = useState<number[]>([]);
   const [score, setScore] = useState<number>(0);
@@ -130,5 +130,3 @@ const CountingGame: React.FC<{}> = () => {
     </div>
   );
 };
-
-export default CountingGame;
