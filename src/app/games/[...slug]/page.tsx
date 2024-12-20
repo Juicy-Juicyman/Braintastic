@@ -13,8 +13,8 @@ const gamesMap: { [key: string]: () => JSX.Element } = {
   reaction: ReactionGame,
 };
 
-export default function GamePage({ params }: { params: { slugs: string[] } }) {
-  const gameKey = params.slugs[0]; 
+export default function GamePage({ params }: { params: { slug: string[] } }) {
+  const gameKey = params.slug[0]; 
   const GameComponent = gamesMap[gameKey];
 
   if (!GameComponent) {
