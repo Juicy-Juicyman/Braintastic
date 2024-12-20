@@ -13,7 +13,7 @@ const gamesMap: { [key: string]: React.ComponentType } = {
   reaction: ReactionGame,
 };
 
-export default function GamePage({ params }: { params: { slugs: string[] } }) {
+export default function GamePage({ params }: { params: Record<string, string[]> }) {
   const gameKey = params.slugs[0]; 
   const GameComponent = gamesMap[gameKey];
 
