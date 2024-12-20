@@ -13,20 +13,22 @@ const gamesMap: { [key: string]: () => JSX.Element } = {
   reaction: ReactionGame,
 };
 
-export default function GamePage({ params }: { params: { slug: string[] } }) {
-  const gameKey = params.slug[0]; 
-  const GameComponent = gamesMap[gameKey];
+export default async function GamePage({ params }: { params: Promise<{ slug: string[] }> }) {
+  // Await the promise to get the actual params object
+  const { slug } = await params;
+  
+  const gameKey = slug[0];
 
+  const GameComponent = gamesMap[gameKey];
+  
   if (!GameComponent) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <h1 className="text-4xl font-bold text-red-600">
-          Game not found!
-        </h1>
+        <h1 className="text-4xl font-bold text-red-600">Game not found!</h1>
       </div>
     );
   }
-
+  
   return (
     <div className="min-h-screen bg-white">
       <GameComponent />
