@@ -12,7 +12,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
       </p>
       <button
         onClick={onStart}
-        className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-semibold text-lg"
+        className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-800 transition font-semibold text-lg"
       >
         Start Game
       </button>

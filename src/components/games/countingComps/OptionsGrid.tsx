@@ -16,8 +16,8 @@ const OptionsGrid: React.FC<OptionsGridProps> = ({
       {options.map((option, index) => (
         <button
           key={index}
-          className={`bg-yellow-200 p-3 sm:p-4 md:p-5 rounded-full transition-colors duration-200 text-lg sm:text-xl font-semibold text-purple-800 ${
-            disabled ? "opacity-50 cursor-not-allowed" : "hover:bg-yellow-300"
+          className={`bg-purple-400 p-3 sm:p-4 md:p-5 rounded-full transition-colors duration-200 text-lg sm:text-xl font-semibold text-black ${
+            disabled ? "opacity-50 cursor-not-allowed" : "hover:bg-purple-600"
           }`}
           onClick={() => onOptionClick(option)}
           disabled={disabled}

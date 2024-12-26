@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { fetchGames } from "@/utils/firebaseQueries";
 import type { Game } from "@/types/gametypes";
+import Image from "next/image";
 
 export default function GamesPage() {
   const [games, setGames] = useState<Game[]>([]);
@@ -26,11 +27,12 @@ export default function GamesPage() {
             href={`/games/${game.slug}`}
             className="card p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow flex flex-col items-center text-center bg-white/80"
           >
-            <div className="w-24 h-24 mb-4 rounded-full bg-purple-100 flex items-center justify-center">
-              <img
+            <div className="relative w-24 h-24 mb-4 rounded-full overflow-hidden bg-purple-100 flex items-center justify-center">
+              <Image
                 src={game.imgSrc}
                 alt={`${game.name} Image`}
-                className="w-full h-full object-cover rounded-full"
+                fill
+                className="object-cover rounded-full"
               />
             </div>
             <h2 className="text-2xl font-bold text-blue-600">{game.name}</h2>

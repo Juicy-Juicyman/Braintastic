@@ -128,8 +128,8 @@ export default function ReactionGame() {
   }
 
   return (
-    <div className="min-h-screen p-6 bg-gradient-to-br from-yellow-100 to-green-100 flex flex-col items-center">
-      <h1 className="text-4xl font-extrabold text-green-700 mb-6">
+    <div className="min-h-screen p-6 bg-gradient-to-br from-blue-50 to-purple-50 flex flex-col items-center">
+      <h1 className="text-4xl font-extrabold text-purple-600 mb-6">
         Reaction Game
       </h1>
 

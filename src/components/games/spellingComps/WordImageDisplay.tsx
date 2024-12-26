@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface WordImageDisplayProps {
@@ -6,11 +7,14 @@ interface WordImageDisplayProps {
 
 const WordImageDisplay: React.FC<WordImageDisplayProps> = ({ imageSrc }) => {
   return (
-    <img
-      src={imageSrc}
-      alt="Guess the word"
-      className="w-full h-64 object-contain mb-6 rounded-lg"
-    />
+    <div className="relative w-full h-64 mb-6 rounded-lg overflow-hidden">
+      <Image
+        src={imageSrc}
+        alt="Guess the word"
+        fill
+        className="object-contain"
+      />
+    </div>
   );
 };
 

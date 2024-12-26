@@ -1,5 +1,6 @@
 import React from "react";
 import { MatchItems } from "@/types/gametypes";
+import Image from "next/image";
 
 interface ImagesColumnProps {
   items: MatchItems[];
@@ -39,11 +40,14 @@ const ImagesColumn: React.FC<ImagesColumnProps> = ({
               ${isSelected ? "ring-2 ring-purple-500" : ""}`}
             >
               {item.image ? (
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="max-w-full max-h-full"
-                />
+                <div className="relative w-full h-full">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               ) : (
                 item.name
               )}

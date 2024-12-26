@@ -1,14 +1,18 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50">
       <div className="flex flex-col items-center mb-8">
-        <img
-          src="/Hero.jpg"
-          alt="Braintastic Hero"
-          className="w-80 h-80 object-cover mb-6 rounded-full"
-        />
+        <div className="relative w-80 h-80 mb-6 rounded-full overflow-hidden">
+          <Image
+            src="/Hero.jpg"
+            alt="Braintastic Hero"
+            fill
+            className="object-cover"
+          />
+        </div>
         <h1 className="text-5xl font-extrabold text-pink-500 mb-4 drop-shadow-md text-center">
           Welcome to Braintastic!
         </h1>
