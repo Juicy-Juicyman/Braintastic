@@ -101,7 +101,7 @@ export default function ShapeMatchingGame() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4 flex flex-col items-center">
       <h1 className="text-2xl sm:text-3xl font-extrabold text-purple-600 mb-4">
-        Shape/Color Matching
+        Shape and Color Matching
       </h1>
 
       {isGameFinished ? (

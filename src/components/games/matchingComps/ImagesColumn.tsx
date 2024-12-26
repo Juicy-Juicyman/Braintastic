@@ -21,7 +21,7 @@ const ImagesColumn: React.FC<ImagesColumnProps> = ({
 }) => {
   return (
     <div className="bg-white p-4 rounded shadow w-full md:w-[45%]">
-      <h3 className="text-lg sm:text-xl font-bold mb-4 text-center">
+      <h3 className="text-lg sm:text-xl font-bold mb-4 text-center text-purple-600">
         Shapes / Colors
       </h3>
       <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">

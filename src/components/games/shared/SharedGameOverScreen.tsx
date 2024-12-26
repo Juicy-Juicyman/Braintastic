@@ -39,7 +39,7 @@ const SharedGameOverScreen: React.FC<SharedGameOverScreenProps> = ({
         placeholder="Enter your nickname"
         value={nickname}
         onChange={(e) => onNicknameChange(e.target.value)}
-        className="w-full p-2 border border-gray-300 rounded mb-4"
+        className="w-full p-2 border border-gray-300 rounded mb-4 text-black"
       />
       <button
         onClick={onSaveHighScore}

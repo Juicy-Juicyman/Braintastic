@@ -17,7 +17,9 @@ const WordsColumn: React.FC<WordsColumnProps> = ({
 }) => {
   return (
     <div className="bg-white p-4 rounded shadow w-full md:w-[45%] mt-4 md:mt-0">
-      <h3 className="text-lg sm:text-xl font-bold mb-4 text-center">Words</h3>
+      <h3 className="text-lg sm:text-xl font-bold mb-4 text-center text-purple-600">
+        Words
+      </h3>
       <div className="flex flex-col gap-3">
         {items.map((item) => {
           const isIncorrect = item.id === incorrectItemId;

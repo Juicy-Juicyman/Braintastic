@@ -137,11 +137,11 @@ export default function MemoryGame() {
             </div>
             <button
               onClick={resetGame}
-              className="p-3 bg-slate-500 text-white rounded mt-6 hover:bg-slate-600 transition"
+              className="p-3 bg-purple-600 text-white rounded mt-6 hover:bg-slate-600 transition"
             >
               Restart
             </button>
-            <p className="mt-4 text-gray-700 font-semibold">
+            <p className="mt-4 text-purple-600 font-semibold">
               Attempts: {attempts}
             </p>
           </>

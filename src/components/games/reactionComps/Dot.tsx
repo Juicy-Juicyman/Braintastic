@@ -21,7 +21,7 @@ const Dot: React.FC<DotProps> = ({ x, y, size, onClick, isPlaying }) => {
         width: size,
         height: size,
         borderRadius: "50%",
-        backgroundColor: "#FF6347",
+        backgroundColor: "#000000",
         cursor: "pointer",
         transition: "top 0.1s, left 0.1s",
         display: "flex",

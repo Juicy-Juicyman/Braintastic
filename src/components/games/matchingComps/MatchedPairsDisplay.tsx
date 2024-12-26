@@ -12,7 +12,9 @@ const MatchedPairsDisplay: React.FC<MatchedPairsDisplayProps> = ({
 
   return (
     <div className="mt-4 md:mt-6">
-      <h4 className="font-bold text-base mb-2">Matched Pairs:</h4>
+      <h4 className="font-bold text-base mb-2 text-purple-600">
+        Matched Pairs:
+      </h4>
       <div className="flex flex-wrap gap-2">
         {matched.map((m) => (
           <div
