@@ -1,5 +1,5 @@
-import React from 'react';
-import { FaStar } from 'react-icons/fa';
+import React from "react";
+import { FaStar } from "react-icons/fa";
 
 interface ScoreDisplayProps {
   score: number;
@@ -13,7 +13,9 @@ const ScoreDisplay: React.FC<ScoreDisplayProps> = ({ score, attempts }) => {
         {Array.from({ length: 10 }, (_, i) => (
           <FaStar
             key={i}
-            className={`mx-1 ${i < score ? 'text-yellow-500' : 'text-gray-300'}`}
+            className={`mx-1 ${
+              i < score ? "text-yellow-500" : "text-gray-300"
+            }`}
             size={24}
           />
         ))}

@@ -10,7 +10,7 @@ interface SharedGameOverScreenProps {
   onSaveHighScore: () => void;
   onPlayAgain: () => void;
   isSaving: boolean;
-  gameTitle?: string; 
+  gameTitle?: string;
 }
 
 const SharedGameOverScreen: React.FC<SharedGameOverScreenProps> = ({
@@ -21,13 +21,19 @@ const SharedGameOverScreen: React.FC<SharedGameOverScreenProps> = ({
   onSaveHighScore,
   onPlayAgain,
   isSaving,
-  gameTitle
+  gameTitle,
 }) => {
   return (
     <div className="bg-white p-6 rounded shadow-lg text-center">
       <h2 className="text-2xl font-bold text-purple-600 mb-4">Game Over!</h2>
-      {gameTitle && <h3 className="text-xl font-semibold text-gray-700 mb-2">{gameTitle}</h3>}
-      <p className="text-gray-700 mb-4">You scored {score} points in {attempts} attempts.</p>
+      {gameTitle && (
+        <h3 className="text-xl font-semibold text-gray-700 mb-2">
+          {gameTitle}
+        </h3>
+      )}
+      <p className="text-gray-700 mb-4">
+        You scored {score} points in {attempts} attempts.
+      </p>
       <input
         type="text"
         placeholder="Enter your nickname"

@@ -1,23 +1,23 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { MatchItems } from '@/types/gametypes';
-import { ALL_ITEMS } from '@/data/words';
-import { getGameItems } from '@/utils/matchingGameUtils';
-import ImagesColumn from './matchingComps/ImagesColumn';
-import WordsColumn from './matchingComps/WordsColumn';
-import MatchedPairsDisplay from './matchingComps/MatchedPairsDisplay';
-import GameOverScreen from './matchingComps/GameOverScreen';
-import DescriptionBox from './matchingComps/DescriptionBox'; 
-import { handleSaveHighScoreCommon } from '@/utils/highScoreHelper';
+import React, { useState, useEffect } from "react";
+import { MatchItems } from "@/types/gametypes";
+import { ALL_ITEMS } from "@/data/words";
+import { getGameItems } from "@/utils/matchingGameUtils";
+import ImagesColumn from "./matchingComps/ImagesColumn";
+import WordsColumn from "./matchingComps/WordsColumn";
+import MatchedPairsDisplay from "./matchingComps/MatchedPairsDisplay";
+import GameOverScreen from "./matchingComps/GameOverScreen";
+import DescriptionBox from "./matchingComps/DescriptionBox";
+import { handleSaveHighScoreCommon } from "@/utils/highScoreHelper";
 
 export default function ShapeMatchingGame() {
   const [items, setItems] = useState<MatchItems[]>([]);
   const [matched, setMatched] = useState<MatchItems[]>([]);
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
   const [attempts, setAttempts] = useState<number>(0);
-  const [nickname, setNickname] = useState<string>(''); 
-  const [isSaving, setIsSaving] = useState<boolean>(false); 
+  const [nickname, setNickname] = useState<string>("");
+  const [isSaving, setIsSaving] = useState<boolean>(false);
   const [incorrectItemId, setIncorrectItemId] = useState<number | null>(null);
   const [justMatchedId, setJustMatchedId] = useState<number | null>(null);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
@@ -35,16 +35,16 @@ export default function ShapeMatchingGame() {
     setJustMatchedId(null);
     setSelectedItemId(null);
     setAttempts(0);
-    setNickname('');
+    setNickname("");
   }
-  
+
   function initializeGame() {
     setupGameState();
   }
-  
+
   function resetGame() {
     setupGameState();
-    setIsSaving(false); 
+    setIsSaving(false);
   }
 
   function handleImageClick(itemId: number) {
@@ -54,9 +54,9 @@ export default function ShapeMatchingGame() {
   function handleWordClick(targetName: string) {
     if (selectedItemId === null) return;
 
-    setAttempts((prev) => prev + 1); 
+    setAttempts((prev) => prev + 1);
 
-    const selectedItem = items.find(it => it.id === selectedItemId);
+    const selectedItem = items.find((it) => it.id === selectedItemId);
     if (!selectedItem) {
       setSelectedItemId(null);
       return;
@@ -64,9 +64,9 @@ export default function ShapeMatchingGame() {
 
     if (selectedItem.name.toLowerCase() === targetName.toLowerCase()) {
       setJustMatchedId(selectedItem.id);
-      setMatched(prev => [...prev, selectedItem]);
+      setMatched((prev) => [...prev, selectedItem]);
 
-      const updatedItems = items.filter(it => it.id !== selectedItem.id);
+      const updatedItems = items.filter((it) => it.id !== selectedItem.id);
       setItems(updatedItems);
 
       setTimeout(() => {
@@ -87,17 +87,16 @@ export default function ShapeMatchingGame() {
     }
   }
 
- 
-async function handleSaveHighScore() {
-  await handleSaveHighScoreCommon({
-    nickname,
-    score: matched.length,
-    attempts,
-    gameName: "Shape Matching Game",
-    setIsSaving,
-    resetGame,
-  });
-}
+  async function handleSaveHighScore() {
+    await handleSaveHighScoreCommon({
+      nickname,
+      score: matched.length,
+      attempts,
+      gameName: "Shape Matching Game",
+      setIsSaving,
+      resetGame,
+    });
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 p-4 flex flex-col items-center">
@@ -121,17 +120,17 @@ async function handleSaveHighScore() {
               onClick={handleSaveHighScore}
               disabled={isSaving}
               className={`w-full mt-2 px-4 py-2 text-white rounded ${
-                isSaving ? 'bg-gray-400' : 'bg-green-500 hover:bg-green-600'
+                isSaving ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
               } transition`}
             >
-              {isSaving ? 'Saving...' : 'Save High Score'}
+              {isSaving ? "Saving..." : "Save High Score"}
             </button>
           </div>
         </div>
       ) : (
         <>
           <div className="w-full md:w-1/2 mt-6 mx-auto">
-            <DescriptionBox description="Welcome to the Shape/Color Matching Game! This fun and engaging activity is designed to sharpen your memory and matching skills. To play, click on an image of a shape or color in the top/left column, then click on the corresponding word in the bottom/right column. Match all pairs to win!"/>
+            <DescriptionBox description="Welcome to the Shape/Color Matching Game! This fun and engaging activity is designed to sharpen your memory and matching skills. To play, click on an image of a shape or color in the top/left column, then click on the corresponding word in the bottom/right column. Match all pairs to win!" />
           </div>
 
           <div className="flex flex-col md:flex-row w-full max-w-4xl mt-4 md:mt-6 gap-4 mx-auto">
@@ -159,4 +158,4 @@ async function handleSaveHighScore() {
       )}
     </div>
   );
-};
+}

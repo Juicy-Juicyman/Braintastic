@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface WordInputFormProps {
   userInput: string;
@@ -6,7 +6,11 @@ interface WordInputFormProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
-const WordInputForm: React.FC<WordInputFormProps> = ({ userInput, onChange, onSubmit }) => {
+const WordInputForm: React.FC<WordInputFormProps> = ({
+  userInput,
+  onChange,
+  onSubmit,
+}) => {
   return (
     <form onSubmit={onSubmit} className="w-full">
       <input

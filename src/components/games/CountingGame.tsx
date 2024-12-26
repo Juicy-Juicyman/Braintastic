@@ -1,22 +1,26 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { ProblemType } from '@/types/gametypes';
-import { generateProblem, generateOptions, generateHint } from "../../utils/mathGameUtils";
-import ProblemDisplay from './countingComps/ProblemDisplay'; 
-import OptionsGrid from './countingComps/OptionsGrid'; 
-import FeedbackMessage from './shared/FeedbackMessage'; 
-import ScoreDisplay from './shared/ScoreDisplay'; 
-import DescriptionBox from './matchingComps/DescriptionBox'; 
-import SharedGameOverScreen from './shared/SharedGameOverScreen';
-import { handleSaveHighScoreCommon } from '@/utils/highScoreHelper';
+import React, { useState, useEffect } from "react";
+import { ProblemType } from "@/types/gametypes";
+import {
+  generateProblem,
+  generateOptions,
+  generateHint,
+} from "../../utils/mathGameUtils";
+import ProblemDisplay from "./countingComps/ProblemDisplay";
+import OptionsGrid from "./countingComps/OptionsGrid";
+import FeedbackMessage from "./shared/FeedbackMessage";
+import ScoreDisplay from "./shared/ScoreDisplay";
+import DescriptionBox from "./matchingComps/DescriptionBox";
+import SharedGameOverScreen from "./shared/SharedGameOverScreen";
+import { handleSaveHighScoreCommon } from "@/utils/highScoreHelper";
 
 export default function CountingGame() {
   const [question, setQuestion] = useState<ProblemType | null>(null);
   const [options, setOptions] = useState<number[]>([]);
   const [score, setScore] = useState<number>(0);
   const [attempts, setAttempts] = useState<number>(0);
-  const [feedback, setFeedback] = useState<string>('');
+  const [feedback, setFeedback] = useState<string>("");
   const [animateOnCorrect, setAnimateOnCorrect] = useState<boolean>(false);
   const [answeredThisRound, setAnsweredThisRound] = useState<boolean>(false);
 
@@ -43,22 +47,22 @@ export default function CountingGame() {
 
     if (question && selectedOption === question.answer) {
       setScore((prev) => prev + 1);
-      setFeedback('Correct! 🎉');
+      setFeedback("Correct! 🎉");
       setAnimateOnCorrect(true);
 
       setTimeout(() => {
         setAnimateOnCorrect(false);
         if (score + 1 === 10) {
-          setIsGameOver(true); 
+          setIsGameOver(true);
         } else {
           const newQ = generateProblem();
           setQuestion(newQ);
         }
-        setFeedback('');
+        setFeedback("");
         setAnsweredThisRound(false);
       }, 1500);
     } else {
-      const hint = question ? generateHint(question) : '';
+      const hint = question ? generateHint(question) : "";
       setFeedback(`Incorrect. Hint: ${hint}`);
       setAnsweredThisRound(false);
     }
@@ -69,7 +73,7 @@ export default function CountingGame() {
     setAttempts(0);
     setIsGameOver(false);
     setNickname("");
-    setFeedback('');
+    setFeedback("");
     setAnsweredThisRound(false);
     setAnimateOnCorrect(false);
     setIsSaving(false);
@@ -104,16 +108,19 @@ export default function CountingGame() {
 
       {!isGameOver ? (
         <>
-          <ProblemDisplay question={question.question} animateOnCorrect={animateOnCorrect} />
+          <ProblemDisplay
+            question={question.question}
+            animateOnCorrect={animateOnCorrect}
+          />
           <div className="bg-white p-4 sm:p-6 md:p-8 rounded-b-xl shadow-xl w-full max-w-md">
-            <OptionsGrid 
-              options={options} 
-              onOptionClick={handleAnswer} 
-              disabled={answeredThisRound} 
+            <OptionsGrid
+              options={options}
+              onOptionClick={handleAnswer}
+              disabled={answeredThisRound}
             />
             <FeedbackMessage feedback={feedback} />
           </div>
-          <ScoreDisplay score={score} attempts={attempts}/>
+          <ScoreDisplay score={score} attempts={attempts} />
         </>
       ) : (
         <SharedGameOverScreen
@@ -129,4 +136,4 @@ export default function CountingGame() {
       )}
     </div>
   );
-};
+}

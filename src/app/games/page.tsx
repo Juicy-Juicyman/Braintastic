@@ -22,21 +22,20 @@ export default function GamesPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {games.map((game) => (
           <Link
-          key={game.slug}
-          href={`/games/${game.slug}`}
-          className="card p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow flex flex-col items-center text-center bg-white/80"
-        >
-          <div className="w-24 h-24 mb-4 rounded-full bg-purple-100 flex items-center justify-center">
-            <img
-              src={game.imgSrc}
-              alt={`${game.name} Image`}
-              className="w-full h-full object-cover rounded-full"
-            />
-          </div>
-          <h2 className="text-2xl font-bold text-blue-600">{game.name}</h2>
-          <p className="text-black">{game.description}</p>
-        </Link>
-        
+            key={game.slug}
+            href={`/games/${game.slug}`}
+            className="card p-6 shadow-lg rounded-lg hover:shadow-xl transition-shadow flex flex-col items-center text-center bg-white/80"
+          >
+            <div className="w-24 h-24 mb-4 rounded-full bg-purple-100 flex items-center justify-center">
+              <img
+                src={game.imgSrc}
+                alt={`${game.name} Image`}
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
+            <h2 className="text-2xl font-bold text-blue-600">{game.name}</h2>
+            <p className="text-black">{game.description}</p>
+          </Link>
         ))}
       </div>
     </div>

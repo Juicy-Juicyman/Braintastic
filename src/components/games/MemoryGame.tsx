@@ -40,7 +40,7 @@ export default function MemoryGame() {
     };
 
     if (flipped.length === 2) {
-      setAttempts((prev) => prev + 1); 
+      setAttempts((prev) => prev + 1);
       setTimeout(() => {
         checkForMatch();
       }, 1000);
@@ -49,7 +49,7 @@ export default function MemoryGame() {
 
   useEffect(() => {
     if (solved.length === cards.length && cards.length > 0) {
-      setGameOver(true); 
+      setGameOver(true);
     }
   }, [solved, cards]);
 
@@ -83,7 +83,9 @@ export default function MemoryGame() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="text-center">
-        <h1 className="text-4xl font-extrabold text-purple-600 mb-6">Memory Game</h1>
+        <h1 className="text-4xl font-extrabold text-purple-600 mb-6">
+          Memory Game
+        </h1>
         {gameOver ? (
           <SharedGameOverScreen
             score={solved.length / 2}
@@ -111,7 +113,11 @@ export default function MemoryGame() {
                     font-bold text-black 
                     cursor-pointer rounded 
                     transform transition-transform duration-300 
-                    ${flipped.includes(index) || solved.includes(index) ? "rotate-180" : ""}
+                    ${
+                      flipped.includes(index) || solved.includes(index)
+                        ? "rotate-180"
+                        : ""
+                    }
                   `}
                 >
                   {flipped.includes(index) || solved.includes(index) ? (
@@ -143,4 +149,4 @@ export default function MemoryGame() {
       </div>
     </div>
   );
-};
+}

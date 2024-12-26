@@ -1,27 +1,27 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import { WordType } from '@/types/gametypes';
-import { shuffleWords } from '@/utils/spellingGameUtils';
-import FeedbackMessage from './shared/FeedbackMessage'; 
-import ScoreDisplay from './shared/ScoreDisplay'; 
-import WordImageDisplay from './spellingComps/WordImageDisplay'; 
-import WordInputForm from './spellingComps/WordInputForm'; 
-import SharedGameOverScreen from './shared/SharedGameOverScreen';
-import { handleSaveHighScoreCommon } from '@/utils/highScoreHelper';
+import React, { useState, useEffect } from "react";
+import { WordType } from "@/types/gametypes";
+import { shuffleWords } from "@/utils/spellingGameUtils";
+import FeedbackMessage from "./shared/FeedbackMessage";
+import ScoreDisplay from "./shared/ScoreDisplay";
+import WordImageDisplay from "./spellingComps/WordImageDisplay";
+import WordInputForm from "./spellingComps/WordInputForm";
+import SharedGameOverScreen from "./shared/SharedGameOverScreen";
+import { handleSaveHighScoreCommon } from "@/utils/highScoreHelper";
 
 export default function SpellingGame() {
   const [shuffledWords, setShuffledWords] = useState<WordType[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  const [userInput, setUserInput] = useState<string>('');
-  const [feedback, setFeedback] = useState<string>('');
+  const [userInput, setUserInput] = useState<string>("");
+  const [feedback, setFeedback] = useState<string>("");
   const [score, setScore] = useState<number>(0);
   const [attempts, setAttempts] = useState<number>(0);
   const [totalAttempts, setTotalAttempts] = useState<number>(0);
 
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
-  const [nickname, setNickname] = useState<string>('');
+  const [nickname, setNickname] = useState<string>("");
   const [isSaving, setIsSaving] = useState<boolean>(false);
 
   useEffect(() => {
@@ -41,10 +41,10 @@ export default function SpellingGame() {
     const currentWord = currentWordObj.word.toLowerCase();
     const userAnswer = userInput.trim().toLowerCase();
 
-    setTotalAttempts((prev) => prev + 1); 
+    setTotalAttempts((prev) => prev + 1);
 
     if (userAnswer === currentWord) {
-      setFeedback('Correct! 🎉');
+      setFeedback("Correct! 🎉");
       setScore((prevScore) => {
         const newScore = prevScore + 1;
 
@@ -56,8 +56,8 @@ export default function SpellingGame() {
       });
       setAttempts(0);
       setTimeout(() => {
-        setFeedback('');
-        setUserInput('');
+        setFeedback("");
+        setUserInput("");
         setCurrentIndex((prevIndex) => (prevIndex + 1) % shuffledWords.length);
       }, 1500);
     } else {
@@ -65,16 +65,20 @@ export default function SpellingGame() {
       const attemptCount = attempts + 1;
 
       if (attemptCount === 1) {
-        setFeedback(`Incorrect. Hint: The word has ${currentWord.length} letters.`);
+        setFeedback(
+          `Incorrect. Hint: The word has ${currentWord.length} letters.`
+        );
       } else if (attemptCount === 2) {
         setFeedback(`Incorrect. Hint: ${currentWordObj.hint}`);
       } else {
         setFeedback(`Incorrect. The correct word was "${currentWord}".`);
         setTimeout(() => {
-          setFeedback('');
-          setUserInput('');
+          setFeedback("");
+          setUserInput("");
           setAttempts(0);
-          setCurrentIndex((prevIndex) => (prevIndex + 1) % shuffledWords.length);
+          setCurrentIndex(
+            (prevIndex) => (prevIndex + 1) % shuffledWords.length
+          );
         }, 2000);
       }
     }
@@ -87,10 +91,10 @@ export default function SpellingGame() {
     setScore(0);
     setAttempts(0);
     setTotalAttempts(0);
-    setFeedback('');
-    setUserInput('');
+    setFeedback("");
+    setUserInput("");
     setIsGameOver(false);
-    setNickname('');
+    setNickname("");
     setIsSaving(false);
   }
 
@@ -119,7 +123,7 @@ export default function SpellingGame() {
 
       {isGameOver ? (
         <SharedGameOverScreen
-          score={10} 
+          score={10}
           attempts={totalAttempts}
           nickname={nickname}
           onNicknameChange={setNickname}
@@ -140,9 +144,7 @@ export default function SpellingGame() {
         </div>
       )}
 
-      <ScoreDisplay score={score} attempts={totalAttempts}/>
+      <ScoreDisplay score={score} attempts={totalAttempts} />
     </div>
   );
-};
-
-
+}

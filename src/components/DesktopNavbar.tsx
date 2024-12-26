@@ -8,9 +8,7 @@ export default function DesktopNavbar() {
 
   const getLinkClass = (href: string) =>
     `text-xl font-medium ${
-      pathname === href
-        ? "text-yellow-300" 
-        : "text-white hover:text-yellow-200" 
+      pathname === href ? "text-yellow-300" : "text-white hover:text-yellow-200"
     }`;
 
   return (

@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import StartScreen from "./reactionComps/StartScreen"; 
-import GameStats from "./reactionComps/GameStats"; 
-import GameOverScreen from "./reactionComps/GameOverScreen"; 
-import Dot from "./reactionComps/Dot"; 
+import StartScreen from "./reactionComps/StartScreen";
+import GameStats from "./reactionComps/GameStats";
+import GameOverScreen from "./reactionComps/GameOverScreen";
+import Dot from "./reactionComps/Dot";
 import { handleSaveHighScoreCommon } from "@/utils/highScoreHelper";
 
-const GAME_DURATION = 30; 
-const MIN_DOT_SIZE = 30; 
-const MAX_DOT_SIZE = 80; 
+const GAME_DURATION = 30;
+const MIN_DOT_SIZE = 30;
+const MAX_DOT_SIZE = 80;
 
 export default function ReactionGame() {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -71,9 +71,11 @@ export default function ReactionGame() {
 
   const placeDotRandomly = () => {
     if (!gameAreaRef.current) return;
-    
+
     const rect = gameAreaRef.current.getBoundingClientRect();
-    const randomSize = Math.floor(Math.random() * (MAX_DOT_SIZE - MIN_DOT_SIZE + 1)) + MIN_DOT_SIZE;
+    const randomSize =
+      Math.floor(Math.random() * (MAX_DOT_SIZE - MIN_DOT_SIZE + 1)) +
+      MIN_DOT_SIZE;
     const maxX = rect.width - randomSize;
     const maxY = rect.height - randomSize;
     const newX = Math.floor(Math.random() * maxX);
@@ -92,7 +94,7 @@ export default function ReactionGame() {
     const reactionTime = now - lastDotTime;
     setReactionTimes((prev) => [...prev, reactionTime]);
 
-    const points = Math.floor((MAX_DOT_SIZE + 20 - dotSize)); 
+    const points = Math.floor(MAX_DOT_SIZE + 20 - dotSize);
     setScore((prev) => prev + points);
     setClickCount((prev) => prev + 1);
 
@@ -101,7 +103,7 @@ export default function ReactionGame() {
 
   const calculateStats = () => {
     const totalTime = GAME_DURATION;
-    const cps = clickCount / totalTime; 
+    const cps = clickCount / totalTime;
 
     let avgReaction = 0;
     if (reactionTimes.length > 0) {
@@ -121,7 +123,7 @@ export default function ReactionGame() {
       attempts: clickCount,
       gameName: "Reaction Game",
       setIsSaving,
-      resetGame, 
+      resetGame,
     });
   }
 
@@ -173,15 +175,14 @@ export default function ReactionGame() {
         ref={gameAreaRef}
         className="relative w-full h-[500px] bg-white mt-6 rounded-lg shadow-md overflow-hidden"
       >
-        <Dot 
-          x={dotX} 
-          y={dotY} 
-          size={dotSize} 
-          onClick={handleDotClick} 
-          isPlaying={isPlaying} 
+        <Dot
+          x={dotX}
+          y={dotY}
+          size={dotSize}
+          onClick={handleDotClick}
+          isPlaying={isPlaying}
         />
       </div>
     </div>
   );
-};
-
+}

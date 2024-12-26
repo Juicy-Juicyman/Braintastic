@@ -13,8 +13,8 @@ export default function MobileNavbar() {
   const getLinkClass = (href: string) =>
     `text-lg font-medium ${
       pathname === href
-        ? "text-yellow-300" 
-        : "text-purple-600 hover:text-yellow-400" 
+        ? "text-yellow-300"
+        : "text-purple-600 hover:text-yellow-400"
     }`;
 
   return (
@@ -26,7 +26,7 @@ export default function MobileNavbar() {
       >
         ☰
       </button>
-      
+
       {isMenuOpen && (
         <div className="absolute top-16 right-4 bg-white rounded-md shadow-lg p-4 z-50">
           <ul className="space-y-4 text-purple-600 text-lg font-medium">
