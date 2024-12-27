@@ -5,36 +5,31 @@ export function getRandomInt(min: number, max: number): number {
 }
 
 export function generateProblem(): ProblemType {
-  const operations = ['+', '-', '*', '/'];
-  const operation = operations[getRandomInt(0, operations.length - 1)];
+  const operations = ["+", "-", "*"];
+  const num1 = Math.floor(Math.random() * 20) + 1;
+  const num2 = Math.floor(Math.random() * 20) + 1;
 
-  let num1 = getRandomInt(1, 20);
-  let num2 = getRandomInt(1, 20);
+  const operation = operations[Math.floor(Math.random() * operations.length)];
 
-  if (operation === '/') {
-    num2 = getRandomInt(1, 10);
-    num1 = num2 * getRandomInt(1, 10);
-  }
-
-  const question = `${num1} ${operation} ${num2}`;
+  let question: string;
   let answer: number;
 
   switch (operation) {
-    case '+':
+    case "+":
+      question = `${num1} + ${num2}`;
       answer = num1 + num2;
       break;
-    case '-':
-      answer = num1 - num2;
+    case "-":
+      question = `${Math.max(num1, num2)} - ${Math.min(num1, num2)}`;
+      answer = Math.max(num1, num2) - Math.min(num1, num2);
       break;
-    case '*':
-      answer = num1 * num2;
-      break;
-    case '/':
-      answer = num1 / num2;
+    case "*":
+      question = `${Math.min(num1, 10)} * ${Math.min(num2, 10)}`;
+      answer = Math.min(num1, 10) * Math.min(num2, 10);
       break;
     default:
+      question = "";
       answer = 0;
-      break;
   }
 
   return { question, answer };
@@ -54,21 +49,16 @@ export function generateOptions(correctAnswer: number): number[] {
   const optionsArray = Array.from(optionsSet);
   return optionsArray.sort(() => Math.random() - 0.5);
 }
-export function generateHint(problem: ProblemType): string {
-  const [num1Str, operation, num2Str] = problem.question.split(' ');
-  const num1 = parseInt(num1Str);
-  const num2 = parseInt(num2Str);
 
-  switch (operation) {
-    case '+':
-      return `Add ${num1} and ${num2}.`;
-    case '-':
-      return `Subtract ${num2} from ${num1}.`;
-    case '*':
-      return `Multiply ${num1} by ${num2}.`;
-    case '/':
-      return `Divide ${num1} by ${num2}.`;
-    default:
-      return '';
+export function generateHint(problem: ProblemType): string {
+  if (problem.question.includes("+")) {
+    return "Try adding the numbers together.";
   }
+  if (problem.question.includes("-")) {
+    return "Think about how much is left after subtracting.";
+  }
+  if (problem.question.includes("*")) {
+    return "Multiplication is repeated addition.";
+  }
+  return "You can solve this!";
 }

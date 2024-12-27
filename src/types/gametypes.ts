@@ -5,11 +5,10 @@ export interface Game {
   imgSrc: string;
   description: string;
 }
-
-export type ProblemType = {
+export interface ProblemType {
   question: string;
   answer: number;
-};
+}
 
 export type WordType = {
   word: string;
