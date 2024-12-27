@@ -9,6 +9,7 @@ import WordImageDisplay from "./spellingComps/WordImageDisplay";
 import WordInputForm from "./spellingComps/WordInputForm";
 import SharedGameOverScreen from "./shared/SharedGameOverScreen";
 import { handleSaveHighScoreCommon } from "@/utils/highScoreHelper";
+import DescriptionBox from "./matchingComps/DescriptionBox";
 
 export default function SpellingGame() {
   const [shuffledWords, setShuffledWords] = useState<WordType[]>([]);
@@ -120,6 +121,9 @@ export default function SpellingGame() {
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-purple-600 mb-4">
         Spelling Game
       </h1>
+      <div className="w-full md:w-1/2 mt-6 mb-10 mx-auto px-4 sm:px-6">
+        <DescriptionBox description="Guess the correct spelling of the word based on the image! Test your vocabulary skills and see how quickly you can get 10 correct answers!" />
+      </div>
 
       {isGameOver ? (
         <SharedGameOverScreen

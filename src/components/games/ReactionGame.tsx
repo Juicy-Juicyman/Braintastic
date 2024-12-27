@@ -6,6 +6,7 @@ import GameStats from "./reactionComps/GameStats";
 import GameOverScreen from "./reactionComps/GameOverScreen";
 import Dot from "./reactionComps/Dot";
 import { handleSaveHighScoreCommon } from "@/utils/highScoreHelper";
+import DescriptionBox from "./matchingComps/DescriptionBox";
 
 const GAME_DURATION = 30;
 const MIN_DOT_SIZE = 30;
@@ -132,7 +133,9 @@ export default function ReactionGame() {
       <h1 className="text-4xl font-extrabold text-purple-600 mb-6">
         Reaction Game
       </h1>
-
+      <div className="w-full md:w-1/2 mt-6 mb-10 mx-auto px-4 sm:px-6">
+        <DescriptionBox description="Flip the cards and find all matching pairs! Test your memory and see how few attempts you need to win!" />
+      </div>
       {!isPlaying && timeLeft === GAME_DURATION && (
         <StartScreen onStart={startGame} />
       )}

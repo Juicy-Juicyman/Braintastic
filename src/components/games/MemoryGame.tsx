@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import SharedGameOverScreen from "./shared/SharedGameOverScreen";
 import { handleSaveHighScoreCommon } from "@/utils/highScoreHelper";
+import DescriptionBox from "./matchingComps/DescriptionBox";
 
 const generateDeck = () => {
   const memoryCards = [
@@ -86,6 +87,9 @@ export default function MemoryGame() {
         <h1 className="text-4xl font-extrabold text-purple-600 mb-6">
           Memory Game
         </h1>
+        <div className="w-full md:w-1/2 mt-6 mb-10 mx-auto px-4 sm:px-6">
+          <DescriptionBox description="Flip the cards and find all matching pairs! Test your memory and see how few attempts you need to win!" />
+        </div>
         {gameOver ? (
           <SharedGameOverScreen
             score={solved.length / 2}
@@ -99,42 +103,45 @@ export default function MemoryGame() {
           />
         ) : (
           <>
-            <div className="grid grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 mt-5">
-              {cards.map((card, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleClick(index)}
-                  className={`
-                    relative
-                    flex justify-center items-center
-                    w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28
-                    bg-slate-200 
-                    text-sm sm:text-lg md:text-4xl
-                    font-bold text-black 
-                    cursor-pointer rounded 
-                    transform transition-transform duration-300 
-                    ${
-                      flipped.includes(index) || solved.includes(index)
-                        ? "rotate-180"
-                        : ""
-                    }
+            <div className="flex justify-center">
+              <div className="grid grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 mt-5 mx-auto">
+                {cards.map((card, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleClick(index)}
+                    className={`
+                      relative
+                      flex justify-center items-center
+                      w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24
+                      bg-slate-200 
+                      text-xs sm:text-sm md:text-lg
+                      font-bold text-black 
+                      cursor-pointer rounded 
+                      transform transition-transform duration-300 
+                      ${
+                        flipped.includes(index) || solved.includes(index)
+                          ? "rotate-180"
+                          : ""
+                      }
                   `}
-                >
-                  {flipped.includes(index) || solved.includes(index) ? (
-                    <div className="relative w-full h-full">
-                      <Image
-                        className="rotate-180 object-contain"
-                        src={`/memory-cards/${card}.jpg`}
-                        fill
-                        alt="Memory Card"
-                      />
-                    </div>
-                  ) : (
-                    "?"
-                  )}
-                </div>
-              ))}
+                  >
+                    {flipped.includes(index) || solved.includes(index) ? (
+                      <div className="relative w-full h-full">
+                        <Image
+                          className="rotate-180 object-contain"
+                          src={`/memory-cards/${card}.jpg`}
+                          fill
+                          alt="Memory Card"
+                        />
+                      </div>
+                    ) : (
+                      "?"
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
+
             <button
               onClick={resetGame}
               className="p-3 bg-purple-600 text-white rounded mt-6 hover:bg-slate-600 transition"

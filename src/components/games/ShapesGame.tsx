@@ -114,13 +114,13 @@ export default function ShapeMatchingGame() {
               placeholder="Enter your nickname"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded mt-2"
+              className="w-full p-2 border border-black rounded mt-2 text-purple-600"
             />
             <button
               onClick={handleSaveHighScore}
               disabled={isSaving}
               className={`w-full mt-2 px-4 py-2 text-white rounded ${
-                isSaving ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
+                isSaving ? "bg-gray-400" : "bg-purple-600 hover:bg-purple-800"
               } transition`}
             >
               {isSaving ? "Saving..." : "Save High Score"}

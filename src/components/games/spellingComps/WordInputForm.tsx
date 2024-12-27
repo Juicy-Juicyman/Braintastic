@@ -24,7 +24,7 @@ const WordInputForm: React.FC<WordInputFormProps> = ({
         type="submit"
         className="mt-4 w-full bg-purple-600 text-white p-3 rounded-lg hover:bg-purple-500 transition-colors duration-200 text-lg sm:text-xl font-semibold"
       >
-        Submit
+        Done!
       </button>
     </form>
   );

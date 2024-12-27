@@ -20,7 +20,7 @@ const ImagesColumn: React.FC<ImagesColumnProps> = ({
   onImageClick,
 }) => {
   return (
-    <div className="bg-white p-4 rounded shadow w-full md:w-[45%]">
+    <div className="bg-white p-4 rounded shadow w-full md:w-[45%] h-auto md:h-[35vh]">
       <h3 className="text-lg sm:text-xl font-bold mb-4 text-center text-purple-600">
         Shapes / Colors
       </h3>
