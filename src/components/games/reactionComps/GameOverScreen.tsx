@@ -6,7 +6,6 @@ interface GameOverScreenProps {
   gameDuration: number;
   cps: number;
   avgReaction: number;
-  onPlayAgain: () => void;
 }
 
 const GameOverScreen: React.FC<GameOverScreenProps> = ({
@@ -15,7 +14,6 @@ const GameOverScreen: React.FC<GameOverScreenProps> = ({
   gameDuration,
   cps,
   avgReaction,
-  onPlayAgain,
 }) => {
   return (
     <div className="text-center mt-6 bg-white p-6 rounded shadow">
@@ -30,12 +28,6 @@ const GameOverScreen: React.FC<GameOverScreenProps> = ({
       <p className="text-lg text-gray-700 mb-4">
         Avg Reaction Time: {avgReaction.toFixed(0)} ms
       </p>
-      <button
-        onClick={onPlayAgain}
-        className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-800 transition font-semibold text-lg"
-      >
-        Play Again
-      </button>
     </div>
   );
 };
