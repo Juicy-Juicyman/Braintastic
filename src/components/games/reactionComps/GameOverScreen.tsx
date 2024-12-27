@@ -19,7 +19,7 @@ const GameOverScreen: React.FC<GameOverScreenProps> = ({
 }) => {
   return (
     <div className="text-center mt-6 bg-white p-6 rounded shadow">
-      <h2 className="text-2xl font-bold text-green-700 mb-4">Game Over!</h2>
+      <h2 className="text-2xl font-bold text-purple-600 mb-4">Game Over!</h2>
       <p className="text-lg text-gray-700 mb-2">Your Score: {score}</p>
       <p className="text-lg text-gray-700 mb-2">
         Clicks: {clickCount} in {gameDuration} seconds
@@ -32,7 +32,7 @@ const GameOverScreen: React.FC<GameOverScreenProps> = ({
       </p>
       <button
         onClick={onPlayAgain}
-        className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition font-semibold text-lg"
+        className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-800 transition font-semibold text-lg"
       >
         Play Again
       </button>

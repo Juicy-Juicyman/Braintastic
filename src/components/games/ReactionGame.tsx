@@ -162,7 +162,7 @@ export default function ReactionGame() {
               onClick={handleSaveHighScore}
               disabled={isSaving}
               className={`px-4 py-2 text-white rounded ${
-                isSaving ? "bg-gray-400" : "bg-green-500 hover:bg-green-600"
+                isSaving ? "bg-gray-400" : "bg-purple-600 hover:bg-purple-800"
               } transition`}
             >
               {isSaving ? "Saving..." : "Save High Score"}
@@ -170,10 +170,11 @@ export default function ReactionGame() {
           </div>
         </div>
       )}
-
       <div
         ref={gameAreaRef}
-        className="relative w-full h-[500px] bg-white mt-6 rounded-lg shadow-md overflow-hidden"
+        className={`relative w-[90%] max-w-[400px] h-[300px] bg-white mt-6 rounded-lg shadow-md overflow-hidden ${
+          !isPlaying && timeLeft === 0 ? "hidden" : ""
+        }`}
       >
         <Dot
           x={dotX}
