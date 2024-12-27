@@ -172,7 +172,7 @@ export default function ReactionGame() {
       )}
       <div
         ref={gameAreaRef}
-        className={`relative w-[90%] max-w-[400px] h-[300px] bg-white mt-6 rounded-lg shadow-md overflow-hidden ${
+        className={`relative w-[90%] max-w-[600px] h-[350px] bg-white mt-6 rounded-lg shadow-md overflow-hidden ${
           !isPlaying && timeLeft === 0 ? "hidden" : ""
         }`}
       >
