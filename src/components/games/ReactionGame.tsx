@@ -79,8 +79,8 @@ export default function ReactionGame() {
       MIN_DOT_SIZE;
     const maxX = rect.width - randomSize;
     const maxY = rect.height - randomSize;
-    const newX = Math.floor(Math.random() * maxX);
-    const newY = Math.floor(Math.random() * maxY);
+    const newX = Math.max(0, Math.floor(Math.random() * maxX));
+    const newY = Math.max(0, Math.floor(Math.random() * maxY));
 
     setDotSize(randomSize);
     setDotX(newX);
