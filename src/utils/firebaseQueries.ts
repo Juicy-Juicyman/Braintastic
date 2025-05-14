@@ -4,6 +4,8 @@ import { localGames } from "@/data/games";
 const USE_LOCAL = process.env.NEXT_PUBLIC_USE_LOCAL_DATA !== "false";
 
 export async function fetchGames(): Promise<Game[]> {
+  if (!USE_LOCAL) {
+  }
   return localGames;
 }
 const inMemoryScores: HighScores[] = [
@@ -58,6 +60,8 @@ const inMemoryScores: HighScores[] = [
 ];
 
 export async function fetchHighScores(): Promise<HighScores[]> {
+  if (!USE_LOCAL) {
+  }
   return inMemoryScores;
 }
 

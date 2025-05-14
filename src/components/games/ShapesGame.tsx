@@ -22,6 +22,7 @@ export default function ShapeMatchingGame() {
   const [justMatchedId, setJustMatchedId] = useState<number | null>(null);
   const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     initializeGame();
   }, []);
