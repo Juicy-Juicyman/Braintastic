@@ -23,7 +23,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Games overview */}
       <section className="mx-auto max-w-5xl px-6 pb-24">
         <h2 className="mb-8 text-3xl font-bold text-center">What’s inside?</h2>
 
