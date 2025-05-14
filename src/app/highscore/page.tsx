@@ -1,6 +1,8 @@
 import { fetchHighScores } from "../../utils/firebaseQueries";
 import { HighScores } from "@/types/gametypes";
 
+export const revalidate = 10;
+
 export default async function HighScorePage() {
   const data: HighScores[] = await fetchHighScores();
 

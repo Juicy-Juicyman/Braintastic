@@ -1,43 +1,65 @@
-import { db } from "@/lib/firebase";
 import type { Game, HighScores } from "@/types/gametypes";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { localGames } from "@/data/games";
 
-
-
-// Fetch highscores for all games
-export async function fetchHighScores(): Promise<HighScores[]> {
-  try {
-    const highscoresCollectionRef = collection(db, "highscores");
-    const snapshot = await getDocs(highscoresCollectionRef);
-    const highscores: HighScores[] = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...(doc.data() as Omit<HighScores, "id">),
-    }));
-    return highscores;
-  } catch (error) {
-    console.error("Error fetching highscores:", error);
-    return [];
-  }
-}
-
-// Fetch games info
+const USE_LOCAL = process.env.NEXT_PUBLIC_USE_LOCAL_DATA !== "false";
 
 export async function fetchGames(): Promise<Game[]> {
-  try {
-    const gamesCollection = collection(db, "games");
-    const snapshot = await getDocs(gamesCollection);
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...(doc.data() as Omit<Game, "id">),
-    }));
-  } catch (error) {
-    console.error("Error fetching games:", error);
-    return [];
-  }
+  return localGames;
 }
+const inMemoryScores: HighScores[] = [
+  {
+    id: "demo-1",
+    nickname: "Alice",
+    score: 23,
+    attempts: 1,
+    game: "reaction",
+    timestamp: new Date("2025-05-01T12:00:00Z"),
+  },
+  {
+    id: "demo-2",
+    nickname: "Bob",
+    score: 15,
+    attempts: 3,
+    game: "counting",
+    timestamp: new Date("2025-05-02T09:30:00Z"),
+  },
+  {
+    id: "demo-3",
+    nickname: "Charlie",
+    score: 30,
+    attempts: 2,
+    game: "shapes",
+    timestamp: new Date("2025-05-03T08:15:00Z"),
+  },
+  {
+    id: "demo-4",
+    nickname: "Dana",
+    score: 12,
+    attempts: 1,
+    game: "memory",
+    timestamp: new Date("2025-05-03T13:45:00Z"),
+  },
+  {
+    id: "demo-5",
+    nickname: "Eve",
+    score: 28,
+    attempts: 4,
+    game: "spelling",
+    timestamp: new Date("2025-05-04T11:05:00Z"),
+  },
+  {
+    id: "demo-6",
+    nickname: "Frank",
+    score: 18,
+    attempts: 2,
+    game: "reaction",
+    timestamp: new Date("2025-05-04T15:20:00Z"),
+  },
+];
 
-
-// Save highscore's
+export async function fetchHighScores(): Promise<HighScores[]> {
+  return inMemoryScores;
+}
 
 export async function saveHighScore({
   nickname,
@@ -50,18 +72,13 @@ export async function saveHighScore({
   attempts: number;
   gameName: string;
 }) {
-  try {
-    const highscoreCollection = collection(db, "highscores");
 
-    await addDoc(highscoreCollection, {
-      nickname,
-      score,
-      attempts,
-      game: gameName,
-      timestamp: new Date(),
-    });
-    console.log("Highscore saved successfully");
-  } catch (error) {
-    console.error("Error while saving highscore", error);
-  }
+  inMemoryScores.push({
+    id: crypto.randomUUID(),
+    nickname,
+    score,
+    attempts,
+    game: gameName,
+    timestamp: new Date(),
+  });
 }
